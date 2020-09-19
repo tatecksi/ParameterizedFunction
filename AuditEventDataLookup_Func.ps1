@@ -6,7 +6,6 @@
 #Setup Variables
 $ResourceGroup = "<ResourceGroup>"
 $WorkspaceName = "<WorkspaceName>"
-$Location = "<RG_Region>"
 $SubscriptionID = "<SubscriptionID>"
 
 #Setup the environment
