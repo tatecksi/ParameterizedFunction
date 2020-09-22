@@ -12,7 +12,7 @@ $SubscriptionID = "<SubscriptionID>"
 $workspaceid = "https://management.azure.com/subscriptions/${SubscriptionID}/resourceGroups/${ResourceGroup}/providers/Microsoft.OperationalInsights/workspaces/${WorkspaceName}"
 
 #Connect to your workspace
-Clear-AzContext
+Clear-AzContext -force
 
 Connect-AzAccount
 
