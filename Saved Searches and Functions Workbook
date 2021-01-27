@@ -1,0 +1,230 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "value::all"
+        ],
+        "parameters": [
+          {
+            "id": "3da1497c-0b3c-4f71-a580-ef4e71270b91",
+            "version": "KqlParameterItem/1.0",
+            "name": "Workspace",
+            "type": 2,
+            "isRequired": true,
+            "query": "resources\r\n| where type =~ 'microsoft.operationalinsights/workspaces'\r\n| project name\r\n",
+            "crossComponentResources": [
+              "value::all"
+            ],
+            "value": "tatecksi",
+            "typeSettings": {
+              "additionalResourceOptions": []
+            },
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "959d5ca8-7878-46b3-865e-caf60279ef2a",
+            "version": "KqlParameterItem/1.0",
+            "name": "SubscriptionId",
+            "type": 1,
+            "query": "resources\r\n| where type =~ 'microsoft.operationalinsights/workspaces'\r\n| where name == \"{Workspace}\"\r\n| project subscriptionId",
+            "crossComponentResources": [
+              "value::all"
+            ],
+            "isHiddenWhenLocked": true,
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "9b3f5f13-16a9-4f82-8ba9-ebcf08d0b94d",
+            "version": "KqlParameterItem/1.0",
+            "name": "ResourceGroup",
+            "type": 1,
+            "query": "resources\r\n| where type =~ 'microsoft.operationalinsights/workspaces'\r\n| where name == \"{Workspace}\"\r\n| project  resourceGroup",
+            "crossComponentResources": [
+              "value::all"
+            ],
+            "isHiddenWhenLocked": true,
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          }
+        ],
+        "style": "pills",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
+      },
+      "name": "parameters - 0"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "# List of Saved Searches and Functions on the workspace - {Workspace}:",
+        "style": "info"
+      },
+      "name": "text - 3"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "{\"version\":\"ARMEndpoint/1.0\",\"data\":null,\"headers\":[],\"method\":\"GET\",\"path\":\"/subscriptions/{SubscriptionId}/resourcegroups/{ResourceGroup}/providers/Microsoft.OperationalInsights/workspaces/{Workspace}/savedSearches\",\"urlParams\":[{\"key\":\"api-version\",\"value\":\"2020-08-01\"}],\"batchDisabled\":false,\"transformers\":[{\"type\":\"jsonpath\",\"settings\":{\"tablePath\":\"$.value[*].properties\",\"columns\":[]}}]}",
+        "size": 0,
+        "exportedParameters": [
+          {
+            "fieldName": "DisplayName",
+            "parameterName": "DisplayName"
+          },
+          {
+            "fieldName": "Query",
+            "parameterName": "Query",
+            "parameterType": 1
+          },
+          {
+            "fieldName": "FunctionAlias",
+            "parameterName": "FunctionAlias",
+            "parameterType": 1
+          },
+          {
+            "fieldName": "functionParameters",
+            "parameterName": "functionParameters",
+            "parameterType": 1
+          },
+          {
+            "fieldName": "Tags",
+            "parameterName": "Tags",
+            "parameterType": 1
+          }
+        ],
+        "queryType": 12,
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "$gen_group",
+              "formatter": 1
+            },
+            {
+              "columnMatch": "Category",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "DisplayName",
+              "formatter": 0,
+              "formatOptions": {
+                "customColumnWidthSetting": "45ch"
+              }
+            },
+            {
+              "columnMatch": "Query",
+              "formatter": 5,
+              "formatOptions": {
+                "customColumnWidthSetting": "43ch"
+              }
+            },
+            {
+              "columnMatch": "FunctionAlias",
+              "formatter": 0,
+              "formatOptions": {
+                "customColumnWidthSetting": "35ch"
+              }
+            },
+            {
+              "columnMatch": "FunctionParameters",
+              "formatter": 0,
+              "formatOptions": {
+                "customColumnWidthSetting": "40ch"
+              }
+            },
+            {
+              "columnMatch": "Version",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "Tags",
+              "formatter": 0,
+              "formatOptions": {
+                "customColumnWidthSetting": "30ch"
+              }
+            }
+          ],
+          "hierarchySettings": {
+            "treeType": 1,
+            "groupBy": [
+              "Category"
+            ]
+          }
+        }
+      },
+      "name": "query - 2"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "## [{DisplayName}]()\r\n\r\n**FunctionAlias:** {FunctionAlias}\r\n\r\n**functionParameters:** {functionParameters}\r\n\r\n**Query:** \r\n\r\n{Query}"
+      },
+      "conditionalVisibility": {
+        "parameterName": "DisplayName",
+        "comparison": "isNotEqualTo"
+      },
+      "name": "text - 4"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let CommentTable = datatable(DisplayName:string, Comment:string)\r\n[\r\n//Add your comments here by specifying the DisplayName and Comments:\r\n'myfunc', 'This is a demo function.',\r\n'ConvertUtcToAustraliaEastern', 'This function will convert UTC time to AustralianEastern Time (including Daylight Saving)',\r\n'ConvertUtcToAustraliaEastern', 'Sample usage: AzureActivity | extend AUSTimeZone = ConvertUtcToAustraliaEastern(TimeGenerated)',\r\n'AuditEventDataLookup_Func', 'Sample usage: SecurityEvent | where EventID == 4719 | extend Category = AuditEventDataLookup_Func(CategoryId)',\r\n'EnrichAuditEvents_Func', 'This is a nested function to enrich Windows Security Events.',\r\n'EnrichAuditEvents_Func', 'Sample usage: let AuditEvents = (SecurityEvent | where EventID == 4719); EnrichAuditEvents_Func(AuditEvents)',\r\n'getUserInsights', 'This function will summarize UEBA Activity Insights for a user.',\r\n'getUserInsights', 'Sample usage: AzureActivity | where CategoryValue ==\"Administrative\" | where Caller has \"@\" | distinct  Caller | extend UserInsights = getUserInsights Caller]',\r\n'ipv4_geoip', 'This function will provide the Country Name for a given IP. Note that the IP column must be named IpAddress',\r\n'ipv4_geoip', 'Sample usage: AzureActivity | project-rename IpAddress = CallerIpAddress | invoke ipv4_geoip()',\r\n'WireDataParser', 'Sample usage: AzureActivity | project-rename IpAddress = CallerIpAddress | invoke ipv4_geoip()'\r\n//\r\n];\r\nCommentTable\r\n| where DisplayName =~ '{DisplayName}'\r\n| project Comment",
+        "size": 1,
+        "timeContext": {
+          "durationMs": 86400000
+        },
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "table",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "Comment",
+              "formatter": 1,
+              "formatOptions": {
+                "customColumnWidthSetting": "100%"
+              },
+              "numberFormat": {
+                "unit": 0,
+                "options": {
+                  "style": "decimal",
+                  "useGrouping": false
+                }
+              }
+            }
+          ]
+        },
+        "tileSettings": {
+          "titleContent": {
+            "columnMatch": "Comment"
+          },
+          "showBorder": false,
+          "size": "full"
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "DisplayName",
+        "comparison": "isNotEqualTo"
+      },
+      "name": "Comment"
+    }
+  ],  
+  "fromTemplateId": "sentinel-UserWorkbook",
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
